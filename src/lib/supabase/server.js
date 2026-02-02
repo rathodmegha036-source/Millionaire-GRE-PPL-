@@ -15,11 +15,9 @@ export async function createSupabaseServerClient() {
         setAll: (cookiesToSet) => {
           try {
             cookiesToSet.forEach(({ name, value, options }) => {
-              console.log(`[Supabase] Setting cookie: ${name}`);
               cookieStore.set(name, value, options);
             });
-          } catch (error) {
-            console.error("[Supabase] Cookie set error:", error);
+          } catch {
             // The `setAll` method was called from a Server Component.
             // This can be ignored if you have middleware refreshing
             // user sessions.

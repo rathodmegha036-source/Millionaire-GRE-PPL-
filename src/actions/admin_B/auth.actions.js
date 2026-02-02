@@ -12,11 +12,9 @@ export async function handleAdminLogin(email, password) {
   });
 
   if (error) {
-    console.error("[Login] Error:", error.message);
     return { success: false, message: error.message };
   }
 
-  console.log("[Login] Success. Session User:", data.session?.user?.email);
   return { success: true };
 }
 

@@ -146,10 +146,7 @@ export default function TestResultPage() {
                       </div>
                       <div className="p-2.5 rounded-lg border bg-slate-50 border-slate-200 text-slate-700">
                         <span className="font-bold uppercase text-[10px] text-slate-400 block mb-0.5">Correct Answer</span>
-                        {q.correct_option === "A" ? q.option_a :
-                          q.correct_option === "B" ? q.option_b :
-                            q.correct_option === "C" ? q.option_c :
-                              q.option_d}
+                        {q.correct_option}
                       </div>
                     </div>
 

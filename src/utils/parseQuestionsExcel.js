@@ -26,7 +26,7 @@ export function parseQuestionsExcel(file) {
             .trim()
             .toUpperCase();
 
-          if (!["VERBAL", "QUANT", "AWA"].includes(section)) {
+          if (!["VERBAL", "QUANT"].includes(section)) {
             throw new Error(`Row ${line}: invalid section_type`);
           }
 
@@ -39,8 +39,7 @@ export function parseQuestionsExcel(file) {
             option_c: row.option_c || null,
             option_d: row.option_d || null,
 
-            correct_option:
-              section === "AWA" ? null : row.correct_option || null,
+            correct_option: row.correct_option || null,
           };
         });
 

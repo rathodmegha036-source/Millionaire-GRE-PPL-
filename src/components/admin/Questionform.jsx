@@ -51,7 +51,7 @@ export default function Questionform({ initialData, onSubmit, submitLabel = "Sav
     setError("");
 
     if (!form.question_text.trim()) return setError("Question text is required");
-    if (form.section_type !== "AWA" && !form.correct_option)
+    if (!form.correct_option)
       return setError("Correct option is required");
 
     const payload = {
@@ -60,7 +60,7 @@ export default function Questionform({ initialData, onSubmit, submitLabel = "Sav
       option_b: form.options[1] || null,
       option_c: form.options[2] || null,
       option_d: form.options[3] || null,
-      correct_option: form.section_type === "AWA" ? null : form.correct_option,
+      correct_option: form.correct_option,
       section_type: form.section_type,
     };
 
@@ -93,7 +93,6 @@ export default function Questionform({ initialData, onSubmit, submitLabel = "Sav
         >
           <option value="VERBAL">Verbal Reasoning</option>
           <option value="QUANT">Quantitative Reasoning</option>
-          <option value="AWA">Analytical Writing (AWA)</option>
         </select>
       </div>
 
@@ -109,40 +108,38 @@ export default function Questionform({ initialData, onSubmit, submitLabel = "Sav
         />
       </div>
 
-      {/* Options for non-AWA */}
-      {form.section_type !== "AWA" && (
-        <div className="space-y-3 pt-1">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {form.options.map((opt, i) => (
-              <div key={i}>
-                <label className={labelClasses}>Option {String.fromCharCode(65 + i)}</label>
-                <input
-                  className={inputClasses}
-                  value={opt}
-                  placeholder={`Option ${String.fromCharCode(65 + i)}...`}
-                  onChange={(e) => updateOption(i, e.target.value)}
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className="bg-blue-50/50 p-3 rounded-lg border border-blue-100 mt-2">
-            <label className={`${labelClasses} text-blue-800`}>Correct Answer</label>
-            <select
-              className={`${inputClasses} bg-white border-blue-200 focus:ring-blue-500`}
-              value={form.correct_option}
-              onChange={(e) =>
-                setForm({ ...form, correct_option: e.target.value })
-              }
-            >
-              <option value="">Select the correct valid option</option>
-              {form.options.map(
-                (opt, i) => opt && <option key={i} value={opt}>{opt}</option>
-              )}
-            </select>
-          </div>
+      {/* Options */}
+      <div className="space-y-3 pt-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {form.options.map((opt, i) => (
+            <div key={i}>
+              <label className={labelClasses}>Option {String.fromCharCode(65 + i)}</label>
+              <input
+                className={inputClasses}
+                value={opt}
+                placeholder={`Option ${String.fromCharCode(65 + i)}...`}
+                onChange={(e) => updateOption(i, e.target.value)}
+              />
+            </div>
+          ))}
         </div>
-      )}
+
+        <div className="bg-blue-50/50 p-3 rounded-lg border border-blue-100 mt-2">
+          <label className={`${labelClasses} text-blue-800`}>Correct Answer</label>
+          <select
+            className={`${inputClasses} bg-white border-blue-200 focus:ring-blue-500`}
+            value={form.correct_option}
+            onChange={(e) =>
+              setForm({ ...form, correct_option: e.target.value })
+            }
+          >
+            <option value="">Select the correct valid option</option>
+            {form.options.map(
+              (opt, i) => opt && <option key={i} value={opt}>{opt}</option>
+            )}
+          </select>
+        </div>
+      </div>
 
       {error && (
         <div className="p-2 bg-red-50 text-red-600 text-xs rounded-lg border border-red-200 text-center">
